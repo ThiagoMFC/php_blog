@@ -56,6 +56,12 @@ if(isset($_GET['action'])){
 
             createPost($title, $body);
         }
+
+        if($action == "deletePost"){
+            $post_id = $post['post_id'];
+
+            deletePost($post_id);
+        }
     
     }
 }
