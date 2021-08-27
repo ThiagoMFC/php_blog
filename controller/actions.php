@@ -19,6 +19,11 @@ if(isset($_GET['action'])){
         getUser();
     }
 
+    if($action == "getUserPosts"){
+        $author_id = $_GET['authorid'];
+        getUserPosts($author_id);
+    }
+
 }else{
     $post = file_get_contents ('php://input');
     $post = json_decode($post, true);
@@ -44,11 +49,14 @@ if(isset($_GET['action'])){
     
             login($email, $password);  
         }
-    
-        if($action == "user"){
-    
-            getUser();  
+
+        if($action == "createPost"){
+            $title = $post['title'];
+            $body = $post['body'];
+
+            createPost($title, $body);
         }
+    
     }
 }
 

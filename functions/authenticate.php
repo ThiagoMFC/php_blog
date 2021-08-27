@@ -1,10 +1,9 @@
-<?php 
-require_once("../config.php");
-require_once('../vendor/autoload.php');
+<?php
+ require_once("../config.php");
+ require_once('../vendor/autoload.php');
  use Firebase\JWT\JWT;
 
-function getUser(){
-
+ function authenticateUser(){
     if(isset($_COOKIE['jwt'])){
         $jwt = $_COOKIE['jwt'];
 
@@ -20,32 +19,17 @@ function getUser(){
         if($sql){
             $row = $sql->fetch_array();
             if($row){
-                $response=array(
-                    "status" => "success",
-                    "message" => "user found",
-                    "data" => $userInfo
-                );
                 
-                echo json_encode($response);
-                return;
+                return true;
             }
         }else{
-            $response = setErr(500, "fail", "");
-        
-            echo json_encode($response);
-            return; 
+            return false; 
         }
         $conn->close();
         
     }else{
-        $response = setErr(401, "fail", "unauthenticated");
-        
-        echo json_encode($response);
-        return;
+        return false;
     }
-
-
-    
-}
+ }
 
 ?>
